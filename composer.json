@@ -1,0 +1,19 @@
+{
+    "name": "alexfed/categoryproducts",
+    "description": "Newbe test task for products and categories relations.",
+    "type": "project,",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Fedorov",
+            "email": "saintfather1@yandex.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Alexfed\\Categoryproducts\\": "src/"
+        }
+    },
+    "require": {}
+}
