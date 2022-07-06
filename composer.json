@@ -16,5 +16,7 @@
             "Alexfed\\Categoryproducts\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "laravel/passport": "*"
+    }
 }
