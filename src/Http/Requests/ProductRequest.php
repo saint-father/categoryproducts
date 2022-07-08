@@ -38,14 +38,12 @@ class ProductRequest extends FormRequest
             case 'POST':
                 return $rules;
             case 'PUT':
-                return [
-                        'id' => 'required|integer|unique:products',
-                    ] + $rules;
-            // case 'PATCH':
+                return [];
             case 'DELETE':
                 return [
                     'id' => 'required|integer|exists:products'
                 ];
+            // case 'PATCH':
         }
     }
 
