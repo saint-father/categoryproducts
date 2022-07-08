@@ -6,10 +6,11 @@ use Alexfed\Categoryproducts\Models\Product;
 use Alexfed\Categoryproducts\Http\Requests\ProductRequest;
 use Alexfed\Categoryproducts\Http\Requests\StorePostRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Validator;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return $this->sendResponse(Product::all(), 'Products retrieved successfully.');
     }
 
     /**
@@ -29,41 +30,62 @@ class ProductController extends Controller
     {
         $product = Product::create($request->validated());
 
-        return $product;
+        return $this->sendResponse($product, 'Product created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param int $productId
+     * @return mixed
      */
-    public function show(Product $product)
+    public function show(int $productId)
     {
-        return $displayedProduct = Product::findOrFail($product);
+        try {
+            $displayedProduct = Product::findOrFail($productId);
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return $this->sendError('Product not found.');
+        }
+
+        return $this->sendResponse($displayedProduct, 'Product retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, int $id)
     {
-        $updatedProduct = Product::findOrFail($product);
-        $updatedProduct->fill($request->except(['id']));
-        $updatedProduct->save();
-        return response()->json($updatedProduct);
+        try {
+            $updatedProduct = Product::findOrFail($id);
+            $updatedProduct->fill($request->except(['id']));
+            $updatedProduct->save();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return $this->sendError('Product not found.');
+        } catch (\Exception $exception) {
+            return $this->sendError('Updating error', [$exception->getMessage()],422);
+        }
+
+        return $this->sendResponse($updatedProduct, 'Product updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
      */
-    public function destroy(Product $product)
+    public function destroy(int $id)
     {
-        $deletedProduct = Product::findOrFail($product);
-        if($deletedProduct->delete()) return response(null, 204);
+        try {
+            $deletedProduct = Product::findOrFail($id);
+            $deletedProduct->delete();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return $this->sendError('Product not found.');
+        } catch (\Exception $exception) {
+            return $this->sendError('Deleting error', [$exception->getMessage()], 422);
+        }
+
+        return $this->sendResponse(null, 'Product deleted successfully.', 204);
     }
 }
