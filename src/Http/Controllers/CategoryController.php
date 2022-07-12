@@ -2,16 +2,16 @@
 
 namespace Alexfed\Categoryproducts\Http\Controllers;
 
-use Alexfed\Categoryproducts\Http\Requests\ProductRequest;
+use Alexfed\Categoryproducts\Http\Requests\CategoryRequest;
 use Validator;
 
-class ProductController extends BaseController
+class CategoryController extends BaseController
 {
     /**
      * Store a newly created resource in storage.
      *
      */
-    public function store(ProductRequest $request)
+    public function store(CategoryRequest $request)
     {
         return $this->storeEntity($request->validated());
     }
@@ -21,7 +21,7 @@ class ProductController extends BaseController
      * Update the specified resource in storage.
      *
      */
-    public function update(ProductRequest $request, int $id)
+    public function update(CategoryRequest $request, int $id)
     {
         return $this->updateEntity($request, $id);
     }
