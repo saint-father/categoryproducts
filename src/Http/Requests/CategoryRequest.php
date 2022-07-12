@@ -2,13 +2,12 @@
 
 namespace Alexfed\Categoryproducts\Http\Requests;
 
-use Alexfed\Categoryproducts\Interfaces\RequestInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Request parameters validation rules customization
  */
-class ProductRequest extends FormRequest implements RequestInterface
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,8 +29,6 @@ class ProductRequest extends FormRequest implements RequestInterface
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'description' => 'required',
-            'isActive' => 'accepted'
         ];
 
         switch ($this->getMethod())

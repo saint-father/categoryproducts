@@ -5,19 +5,18 @@ namespace Alexfed\Categoryproducts\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'isActive'];
-
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $table = 'categories';
+    protected $fillable = ['name'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function products()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Product::class);
     }
 }
