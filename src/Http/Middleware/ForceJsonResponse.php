@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Aleksey Fiodorov
+ * @copyright Copyright (c) saint-father (https://github.com/saint-father)
+ */
 
 namespace Alexfed\Categoryproducts\Http\Middleware;
 
