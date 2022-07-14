@@ -15,4 +15,11 @@ Newbe test task: category-product relations in API
     Show:               method:GET, URL:http://localhost:8000/api/products/{id}
     Update:             method:PUT, URL:http://localhost:8000/api/products/{id}
     Delete:             method:DELETE, URL:http://localhost:8000/api/products/{id}
+    AssignCategory:     method:DELETE, URL:http://localhost:8000/api/assign-category/{productId}
+    
+    List:               method:GET, URL:http://localhost:8000/api/categories
+    Create:             method:POST, URL:http://localhost:8000/api/categories
+    Show:               method:GET, URL:http://localhost:8000/api/categories/{id}
+    Update:             method:PUT, URL:http://localhost:8000/api/categories/{id}
+    Delete:             method:DELETE, URL:http://localhost:8000/api/categories/{id}
 

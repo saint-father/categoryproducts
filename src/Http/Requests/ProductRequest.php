@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Aleksey Fiodorov
+ * @copyright Copyright (c) saint-father (https://github.com/saint-father)
+ */
 
 namespace Alexfed\Categoryproducts\Http\Requests;
 
@@ -6,7 +10,7 @@ use Alexfed\Categoryproducts\Interfaces\RequestInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Request parameters validation rules customization
+ * class CategoryRequest for product parameters validation rules customization
  */
 class ProductRequest extends FormRequest implements RequestInterface
 {
@@ -56,7 +60,6 @@ class ProductRequest extends FormRequest implements RequestInterface
      */
     public function all($keys = null)
     {
-        // return $this->all();
         $data = parent::all($keys);
         switch ($this->getMethod())
         {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Aleksey Fiodorov
+ * @copyright Copyright (c) saint-father (https://github.com/saint-father)
+ */
 
 namespace Alexfed\Categoryproducts\Http\Controllers;
 
@@ -8,10 +12,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class BaseController with default actions
+ */
 class BaseController extends Controller
 {
+    /**
+     * @var EntityService
+     */
     protected $entityService;
 
+    /**
+     * BaseController constructor
+     *
+     * @param EntityService $entityService
+     */
     public function __construct(
         EntityService $entityService
     ) {
@@ -33,10 +48,11 @@ class BaseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param mixed $request
+     * @return \Illuminate\Http\Response
      */
     public function storeEntity($request)
     {
-//        $product = Product::create($request->validated());
         $product = $this->entityService->set($request);
 
         return $this->sendResponse($product, 'Product created successfully.');
@@ -46,34 +62,37 @@ class BaseController extends Controller
      * Display the specified resource.
      *
      * @param int $productId
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function show(int $productId)
     {
         try {
             $displayedProducts = $this->entityService->get($productId);
         } catch (ModelNotFoundException $modelNotFoundException) {
-            return $this->sendError('Product not found.');
+            return $this->sendError('Not found.');
         }
 
-        return $this->sendResponse($displayedProducts, 'Product retrieved successfully.');
+        return $this->sendResponse($displayedProducts, 'Retrieved successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param mixed $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
     public function updateEntity($request, int $id)
     {
         try {
             $updatedProduct = $this->entityService->set($request->except(['id']), $id);
         } catch (ModelNotFoundException $modelNotFoundException) {
-            return $this->sendError('Product not found.');
+            return $this->sendError('Not found.');
         } catch (\Exception $exception) {
             return $this->sendError('Updating error', [$exception->getMessage()],422);
         }
 
-        return $this->sendResponse($updatedProduct, 'Product updated successfully.');
+        return $this->sendResponse($updatedProduct, 'Updated successfully.');
     }
 
     /**
@@ -85,20 +104,23 @@ class BaseController extends Controller
     public function destroy(int $id)
     {
         try {
-            $updatedProduct = $this->entityService->set([], $id);
+            $result = $this->entityService->delete($id);
         } catch (ModelNotFoundException $modelNotFoundException) {
-            return $this->sendError('Product not found.');
+            return $this->sendError('Entity not found.');
         } catch (\Exception $exception) {
             return $this->sendError('Deleting error', [$exception->getMessage()], 422);
         }
 
-        return $this->sendResponse(null, 'Product deleted successfully.', 204);
+        return $this->sendResponse($result, 'Resource deleted successfully.', 204);
     }
 
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\Response
+     * @param mixed $result
+     * @param array|string $message
+     * @param int $code
+     * @return \Illuminate\Http\JsonResponse
      */
     public function sendResponse($result, $message, $code = 200)
     {
@@ -107,12 +129,17 @@ class BaseController extends Controller
             'data'    => $result,
             'message' => $message,
         ];
+
         return response()->json($response, $code);
     }
+
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\Response
+     * @param string $error
+     * @param array|string $errorMessages
+     * @param int $code
+     * @return \Illuminate\Http\JsonResponse
      */
     public function sendError($error, $errorMessages = [], $code = 404)
     {
@@ -120,9 +147,11 @@ class BaseController extends Controller
             'success' => false,
             'message' => $error,
         ];
+
         if(!empty($errorMessages)){
             $response['data'] = $errorMessages;
         }
+
         return response()->json($response, $code);
     }
 }
