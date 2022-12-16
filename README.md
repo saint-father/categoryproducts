@@ -24,7 +24,17 @@ Newbe test task: category-product relations in API
     Delete:             method:DELETE, URL:http://localhost:8000/api/categories/{id}
 
 ## Installation
-Install Laravel 8/9 and create new project then
+- Install Laravel 8/9 and create new project then
+- Add "categoryproducts" repository to composer.json:
+```json
+"repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/saint-father/categoryproducts.git"
+        }
+    ],
+```
+- Install the module:
 ```console
 composer require alexfed/categoryproducts:dev-master#v0.0.6
 ```
