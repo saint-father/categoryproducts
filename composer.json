@@ -17,6 +17,8 @@
         }
     },
     "require": {
-        "laravel/passport": "*"
+        "laravel/passport": "*",
+        "zircote/swagger-php": "*",
+        "darkaonline/l5-swagger": "*"
     }
 }
