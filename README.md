@@ -3,6 +3,7 @@ Newbe test task: category-product relations in API
 
 ## Features
 - "Accept" header is not required in request. 'Application/json' response type will be set in any cases.
+- Utilizes Swagger library for API documentation (/api/documentation URI).
 
 ### Available methods
 
@@ -34,7 +35,15 @@ Newbe test task: category-product relations in API
         }
     ],
 ```
-- Install the module:
+- Install the module with dependencies:
 ```console
 composer require alexfed/categoryproducts:dev-master#v0.0.6
+```
+- Publish configurations and templates of Swagger library:
+```php
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+```
+- Generate API-docs
+```php
+php artisan l5-swagger:generate
 ```
