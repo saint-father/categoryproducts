@@ -23,3 +23,8 @@ Newbe test task: category-product relations in API
     Update:             method:PUT, URL:http://localhost:8000/api/categories/{id}
     Delete:             method:DELETE, URL:http://localhost:8000/api/categories/{id}
 
+## Installation
+Install Laravel 8/9 and create new project then
+```console
+composer require alexfed/categoryproducts:dev-master#v0.0.6
+```
