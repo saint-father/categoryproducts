@@ -1,4 +1,4 @@
-# Categoryproducts module by Alexey Fedorov
+# Categoryproducts module
 Newbe test task: category-product relations in API 
 
 ## Features
